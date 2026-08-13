@@ -7,6 +7,7 @@
 size = Vector2(127, 126)
 
 [node name="Test_Player" type="CharacterBody2D" unique_id=622679]
+position = Vector2(-165, -2.0000002)
 scale = Vector2(0.132287, 0.138922)
 script = ExtResource("1_bom5g")
 
