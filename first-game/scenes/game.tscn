@@ -3,10 +3,39 @@
 [ext_resource type="PackedScene" uid="uid://dc7pfv6vysbco" path="res://scenes/level_1.tscn" id="2_lnu2h"]
 [ext_resource type="PackedScene" uid="uid://b05vrk3rcaoji" path="res://scenes/player.tscn" id="2_yqjtg"]
 
+[sub_resource type="GDScript" id="GDScript_yqjtg"]
+script/source = "extends CharacterBody2D
+
+
+const SPEED = 300.0
+const JUMP_VELOCITY = -400.0
+
+
+func _physics_process(delta: float) -> void:
+	# Add the gravity.
+	if not is_on_floor():
+		velocity += get_gravity() * delta
+
+	# Handle jump.
+	if Input.is_action_just_pressed(\"ui_accept\") and is_on_floor():
+		velocity.y = JUMP_VELOCITY
+
+	# Get the input direction and handle the movement/deceleration.
+	# As good practice, you should replace UI actions with custom gameplay actions.
+	var direction := Input.get_axis(\"ui_left\", \"ui_right\")
+	if direction:
+		velocity.x = direction * SPEED
+	else:
+		velocity.x = move_toward(velocity.x, 0, SPEED)
+
+	move_and_slide()
+"
+
 [node name="Game" type="Node2D" unique_id=854416902]
 
 [node name="level 1" parent="." unique_id=647829840 instance=ExtResource("2_lnu2h")]
 position = Vector2(140, 338)
 
 [node name="player" parent="." unique_id=482311491 instance=ExtResource("2_yqjtg")]
-position = Vector2(-638, 227)
+position = Vector2(-617, 655)
+script = SubResource("GDScript_yqjtg")
